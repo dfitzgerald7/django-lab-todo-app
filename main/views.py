@@ -72,7 +72,6 @@ def logout_request(request):
 
 def new_lab(request):
     todo_formset = formset_factory(TodoForm)
-    # todo_formset = modelformset_factory(Todo, fields=('title',))
     if request.method == "POST":
         form = LabForm(request.POST)
         todos_form = todo_formset(request.POST)

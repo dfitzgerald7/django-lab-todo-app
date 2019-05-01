@@ -13,11 +13,6 @@ class LabForm(forms.ModelForm):
         model = Lab
         fields = ['title', 'description', 'start_date', 'due_date']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(LabForm, self).__init__(*args, **kwargs)
-    #     self.fields['start_date'].widget = widgets.AdminSplitDateTime()
-    #     self.fields['due_date'].widget = widgets.AdminSplitDateTime()
-
 class TodoForm(forms.ModelForm):
 
     class Meta:
@@ -26,22 +21,8 @@ class TodoForm(forms.ModelForm):
 
 class TodoCheckboxForm(forms.Form):
 
-    # todos = forms.ModelMultipleChoiceField(
-    #                     widget = forms.CheckboxSelectMultiple,
-    #                     queryset = Todo.objects.all()
-    # #            )
-
-    # todos = forms.choi
-
-    # todos = forms.BooleanField
-
-    # class Meta:
-    #     model = Todos
-    #     fields = ['todos']
-
     def __init__(self, lab, *args, **kwargs):
         super(TodoCheckboxForm, self).__init__(*args, **kwargs)
-        # todos = Todo.objects.filter(lab=lab, completed=False)
         self.fields['todos'] = forms.ModelMultipleChoiceField(
                                 widget = forms.CheckboxSelectMultiple,
                                 queryset = Todo.objects.filter(lab=lab, completed=False)
