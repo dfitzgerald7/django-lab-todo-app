@@ -10,11 +10,11 @@ from .models import Todo, Lab
 from django.db.models import Q
 # Create your views here.
 
-def homepage(request):
+
+def homepage(request): #lab index page
     if request.user.is_authenticated:
-        completed = Lab.objects.filter(users=request.user, completed=True)
-        incompleted = Lab.objects.filter(users=request.user, completed=False).order_by('due_date')
-        print(incompleted)
+        completed = Lab.objects.filter(users=request.user, completed=True) 
+        incompleted = Lab.objects.filter(users=request.user, completed=False).order_by('due_date') #labs with closest due dates first
         return render(request, 
                     'main/homepage.html',
                     context={'completed': completed, 'incompleted': incompleted,
@@ -77,9 +77,8 @@ def new_lab(request):
         todos_form = todo_formset(request.POST)
         if form.is_valid() & todos_form.is_valid():
             lab = form.save()
-            lab.users.add(request.user)
-           
-            for todo_f in todos_form:
+            lab.users.add(request.user) # attach lab to current user
+            for todo_f in todos_form: #for each todo, add it to lab
                 if todo_f.is_valid():
                     todo = todo_f.save()
                     lab.todo_set.add(todo)
