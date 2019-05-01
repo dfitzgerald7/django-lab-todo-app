@@ -1,0 +1,28 @@
+{% extends 'main/main_html.html' %}
+
+{% block content %}
+    <div class=container>
+    <form method="POST" action='/labs/new'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        {{ form.media }}
+
+        <h4> What must be completed in this lab? </h4>
+        {{ todo_form.management_form }}
+        <div id="form_set">
+            {% for form in todo_form.forms %}
+                <table class='no_error'>
+                    {{ form.as_table }}
+                </table>
+            {% endfor %}
+        </div>
+        <input type="button" value="Add Todos" id="add_more">
+        <div id="empty_form" style="display:none">
+            <table class='no_error'>
+                {{ todo_form.empty_form.as_table }}
+            </table>
+        </div>
+        <button class='btn' type='submit'> Create Lab </button>
+    </form>
+    </div>
+{% endblock %}

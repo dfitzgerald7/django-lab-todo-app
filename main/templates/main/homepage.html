@@ -1,0 +1,44 @@
+{% extends "main/main_html.html" %}
+
+{% block content %}
+<div class='container'>
+    {% if logged_in == True%}
+        <a href='/labs/new' class='btn btn-primary'> Add Lab</a> <br> <br>
+        <h3> Completed Labs </h3>
+        <hr>
+        <div class='row'>
+            {% for lab in completed %}
+            <div class='col-md-4'>
+                <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">{{  lab.title }}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Due: {{ lab.due_date }}</h5>
+                        <p class="card-text">{{ lab.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <h3> Labs to be completed </h3>
+        <hr>
+        <div class='row'>
+            {% for lab in incompleted %}
+            <div class='col-md-4'>
+                    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                        <div class="card-header">{{  lab.title }}</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Due: {{ lab.due_date }}</h5>
+                            <p class="card-text">{{ lab.description }}</p>
+                            <a href={% url 'main:lab_show' lab_id=lab.id %} class="btn btn-light">View this lab.</a>
+                        </div>
+                    </div>
+                </div>
+ 
+            {% endfor %}
+         </div>
+        
+    {% else %}
+        <h3> Please log in to use this app. </h3>
+    {% endif %}
+</div>
+{% endblock %}

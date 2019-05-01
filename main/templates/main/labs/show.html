@@ -1,0 +1,26 @@
+
+{% extends 'main/main_html.html' %}
+
+{% block content %}
+<div class='container'>
+    <h3> {{ lab }} </h3>
+
+    <h4> Completed Tasks </h4>
+    <hr>
+    <ol>
+    {% for task in completed %}    
+       <li> {{ task }} </li>
+    {% endfor %}
+    </ol>
+    <br>
+    <hr>
+    <h4> To Be Completed</h4>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" > Submit Changes </button>
+    </form>
+
+</div>
+
+{% endblock %}
