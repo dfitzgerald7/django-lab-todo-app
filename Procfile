@@ -1,1 +1,1 @@
-web: gunicorn django-lab-todo.wsgi
+web: gunicorn lab_todo_app.wsgi
