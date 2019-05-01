@@ -1,1 +1,1 @@
-web: gunicorn django-lab-todo.wsgi --log-file -
+web: gunicorn django-lab-todo.wsgi
