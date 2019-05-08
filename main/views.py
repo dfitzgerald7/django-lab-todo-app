@@ -8,6 +8,8 @@ from django.forms import formset_factory
 from django.forms import modelformset_factory
 from .models import Todo, Lab
 from django.db.models import Q
+from rest_framework import viewsets
+from .serializers import LabSerializer
 # Create your views here.
 
 
@@ -116,3 +118,8 @@ def lab_show(request, lab_id):
 
     return render(request, 'main/labs/show.html', 
                     context={'lab':lab, 'completed':completed, 'todos': todos, 'form': checkbox_form} )
+
+
+class LabView(viewsets.ModelViewSet):
+    queryset = Lab.objects.all()
+    serializer_class = LabSerializer

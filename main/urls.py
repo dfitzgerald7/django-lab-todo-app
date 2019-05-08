@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-
+from rest_framework import routers
 
 app_name = 'main'
+
+router = routers.DefaultRouter()
+router.register('labs', views.LabView)
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -26,5 +29,6 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('login/', views.login_request, name='login'),
     path('labs/new', views.new_lab, name='new_lab'),
-    path('labs/<lab_id>', views.lab_show, name='lab_show')
+    path('labs/<lab_id>', views.lab_show, name='lab_show'),
+    path('', include(router.urls))
 ]
