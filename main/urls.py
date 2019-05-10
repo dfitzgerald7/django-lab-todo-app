@@ -22,6 +22,7 @@ app_name = 'main'
 
 router = routers.DefaultRouter()
 router.register('labs', views.LabView)
+router.register('todos', views.TodoView)
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),

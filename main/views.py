@@ -123,3 +123,7 @@ def lab_show(request, lab_id):
 class LabView(viewsets.ModelViewSet):
     queryset = Lab.objects.all()
     serializer_class = LabSerializer
+
+class TodoView(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
