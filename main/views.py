@@ -9,7 +9,7 @@ from django.forms import modelformset_factory
 from .models import Todo, Lab
 from django.db.models import Q
 from rest_framework import viewsets
-from .serializers import LabSerializer
+from .serializers import LabSerializer, TodoSerializer
 # Create your views here.
 
 
