@@ -10,12 +10,17 @@ from .models import Todo, Lab
 from django.db.models import Q
 from rest_framework import viewsets
 from .serializers import LabSerializer, TodoSerializer
+from rest_framework.response import Response
+import requests
 # Create your views here.
 
 
 def homepage(request): #lab index page
     if request.user.is_authenticated:
-        completed = Lab.objects.filter(users=request.user, completed=True) 
+        # completed = Lab.objects.filter(users=request.user, completed=True) 
+        ## trying to use fetch request 
+        completed = requests.get('http://localhost:8000/labs')
+        completed = completed.json()
         incompleted = Lab.objects.filter(users=request.user, completed=False).order_by('due_date') #labs with closest due dates first
         return render(request, 
                     'main/homepage.html',
@@ -121,8 +126,14 @@ def lab_show(request, lab_id):
 
 
 class LabView(viewsets.ModelViewSet):
+
     queryset = Lab.objects.all()
     serializer_class = LabSerializer
+
+    # def list(self, request):
+    #     queryset = Lab.objects.filter(users=request.user)
+    #     serializer = LabSerializer
+    #     return Response(serializer.data)
 
 class TodoView(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
