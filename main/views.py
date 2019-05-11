@@ -17,15 +17,11 @@ import requests
 
 def homepage(request): #lab index page
     if request.user.is_authenticated:
-        # completed = Lab.objects.filter(users=request.user, completed=True) 
         ## trying to use fetch request 
         response = requests.get('http://localhost:8000/labs').json()
-        print(response)
         user_labs = list(filter(lambda lab: lab["users"][0]==request.user.id, response))
-        print(user_labs)
         completed = [lab for lab in user_labs if lab['completed'] is True]
         incompleted = [lab for lab in user_labs if lab['completed'] is False]
-        #incompleted = Lab.objects.filter(users=request.user, completed=False).order_by('due_date') #labs with closest due dates first
         return render(request, 
                     'main/homepage.html',
                     context={'completed': completed, 'incompleted': incompleted,
