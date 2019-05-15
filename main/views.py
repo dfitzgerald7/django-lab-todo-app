@@ -18,8 +18,8 @@ import requests
 def homepage(request): #lab index page
     if request.user.is_authenticated:
         ## using a get request instead of query 
-        response = requests.get('http://localhost:8000/labs').json()
-        user_labs = list(filter(lambda lab: lab["users"][0]==request.user.id, response))
+        user_labs = requests.get(f'http://localhost:8000/labs?user={request.user.id}').json()
+        # user_labs = list(filter(lambda lab: lab["users"][0]==request.user.id, response))
         completed = [lab for lab in user_labs if lab['completed'] is True]
         incompleted = [lab for lab in user_labs if lab['completed'] is False]
         return render(request, 
@@ -36,10 +36,13 @@ class LabView(viewsets.ModelViewSet):
     queryset = Lab.objects.all()
     serializer_class = LabSerializer
 
-    # def list(self, request):
-    #     queryset = Lab.objects.filter(users=request.user)
-    #     serializer = LabSerializer
-    #     return Response(serializer.data)
+    def get_queryset(self):
+        specimen = self.request.query_params.get('user', None)
+        if specimen is None:
+            queryset = Lab.objects.all()
+        else:
+            queryset = Lab.objects.filter(users=specimen)
+        return queryset
 
 def signup(request):
     if request.method == "POST":  
