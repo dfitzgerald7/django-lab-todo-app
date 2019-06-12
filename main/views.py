@@ -18,7 +18,7 @@ import requests
 def homepage(request): #lab index page
     if request.user.is_authenticated:
         ## using a get request instead of query 
-        user_labs = requests.get(f'http://localhost:8000/labs?user={request.user.id}').json()
+        user_labs = requests.get(f'https://django-lab-todo.herokuapp.com/labs?user={request.user.id}').json()
         # user_labs = list(filter(lambda lab: lab["users"][0]==request.user.id, response))
         completed = [lab for lab in user_labs if lab['completed'] is True]
         incompleted = [lab for lab in user_labs if lab['completed'] is False]
